@@ -8,13 +8,23 @@ namespace Library.API.Repositories
 
         public BookRepository(DataContext dataContext)
         {
-                this.dataContext = dataContext;
+            this.dataContext = dataContext;
         }
 
-        public List<Book> list()
+        public List<Book> List()
         {
-            //test 
             return dataContext.Books.ToList();
+        }
+
+        public List<Book> Find(string title)
+        {
+            return dataContext.Books.Where((book) => book.Title.Contains(title)).ToList();
+        }
+
+        public void SaveBook(Book book)
+        {
+            dataContext.Add(book);
+            dataContext.SaveChanges();
         }
     }
 }

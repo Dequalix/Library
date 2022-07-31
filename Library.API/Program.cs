@@ -12,6 +12,8 @@ builder.Services.AddDbContext<DataContext>(options =>
 
 
 builder.Services.AddScoped<IBookRepository, BookRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IReservationRepository, ReservationRepository>();
 
 var app = builder.Build();
 
@@ -23,7 +25,7 @@ using (var scope = app.Services.CreateScope())
     var services = scope.ServiceProvider;
 
     var context = services.GetRequiredService<Library.API.DataContext>();
-    context.Database.EnsureCreated();
+    context.Database.Migrate();
 }
 
 //Bind(IBookRepository).to(BookRepository);

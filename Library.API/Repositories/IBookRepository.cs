@@ -5,6 +5,9 @@ namespace Library.API.Repositories
     public interface IBookRepository 
     {
         // return, name, (params)
-        List<Book> list(); 
+        List<Book> List(); 
+        List<Book> Find(string Book);
+
+        void SaveBook(Book book);
     }
 }

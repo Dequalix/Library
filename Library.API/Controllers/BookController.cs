@@ -1,4 +1,5 @@
 ﻿using Library.API.DTO;
+using Library.API.Models;
 using Library.API.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -9,7 +10,7 @@ namespace Library.API.Controllers
     [ApiController]
     public class BookController : ControllerBase
     {
-        private IBookRepository _bookRepository;
+        private readonly IBookRepository _bookRepository;
 
         public BookController(IBookRepository bookRepository)
         {
@@ -17,42 +18,25 @@ namespace Library.API.Controllers
         }
 
 
-        List<BookDTO> Books = new List<BookDTO>();
         
         [HttpGet("list")]
         // scope, return, name, (params)
         public List<BookDTO> BookList()
         {
-            // get books from db
-            var books =  this._bookRepository.list();
-            /// create return collectioin
-            List<BookDTO> bookDtos = new List<BookDTO>();
-            // foreach book from the database we will create a new BookDto and add the BookDto to the return collection
-            books.ForEach(x => bookDtos.Add(new BookDTO { Title = x.Title, Published = x.Published }));
-            // return the collection
-            return bookDtos;
-
-
+            return this._bookRepository.List().Select(Mapper.ToBookDto).ToList();
         }
 
         [HttpPost("addbook")]
-        public void SaveBook(BookDTO book)
+        public void SaveBook(List<BookDTO> bookDto)
         {
-            Books.Add(book);
+            bookDto.ForEach(book => this._bookRepository.SaveBook(Mapper.ToBook(book)));
         }
 
         [HttpGet("find")]
         public List<BookDTO> FindBook(string Title)
         {
-            var results = new List<BookDTO>();
-            foreach (BookDTO book in Books)
-            {
-                if (book.Title == Title)
-                {
-                    results.Add(book);
-                }
-            }
-            return results;
+            //  get books with title
+            return this._bookRepository.Find(Title).Select(Mapper.ToBookDto).ToList();
         }
     }
 }
