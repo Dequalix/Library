@@ -19,6 +19,14 @@ namespace Library.API
 
         public DbSet<Reservation> Reservations { get; set; }
 
+        public DbSet<BooksInStock> BooksInStocks { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Book>()
+                .HasOne(a => a.Stock)
+                .WithOne(a => a.Book).IsRequired();
+        }
     
     }
 }

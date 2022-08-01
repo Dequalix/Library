@@ -9,9 +9,13 @@ namespace Library.API
         {
             return new Book
             {
+                Author = dto.Author,
                 Title = dto.Title,
-                Published = dto.Published,
-                Id = dto.BookId
+                Year = dto.Year,
+                Id = dto.BookId,
+                Language = dto.Language,
+                Pages = dto.Pages,
+                Stock = new BooksInStock() { TotalStock = dto.InStock, BookId = dto.BookId}
             };
         }
 
@@ -19,9 +23,31 @@ namespace Library.API
         {
             return new BookDTO
             {
+                Author = model.Author,
                 Title = model.Title,
-                Published = model.Published,
-                BookId = model.Id
+                Year = model.Year,
+                BookId = model.Id,
+                Language = model.Language,
+                Pages = model.Pages,
+                InStock = model.Stock.TotalStock.GetValueOrDefault()                
+            };
+        }
+
+        public static BooksInStock ToBookInStockDto(BooksInStock model)
+        {
+            return new BooksInStock
+            {
+                BookId = model.BookId,
+                TotalStock = model.TotalStock              
+            };
+        }
+
+        public static BooksInStockDTO ToBookInStock(BooksInStock dto)
+        {
+            return new BooksInStockDTO
+            {
+                BookId = dto.BookId,
+                TotalStock = dto.TotalStock
             };
         }
 

@@ -29,14 +29,14 @@ namespace Library.API.Controllers
         [HttpPost("addbook")]
         public void SaveBook(List<BookDTO> bookDto)
         {
-            bookDto.ForEach(book => this._bookRepository.SaveBook(Mapper.ToBook(book)));
+            bookDto.ForEach(dto => this._bookRepository.SaveBook(Mapper.ToBook(dto)));
         }
 
         [HttpGet("find")]
-        public List<BookDTO> FindBook(string Title)
+        public List<BookDTO> FindBook(string search)
         {
             //  get books with title
-            return this._bookRepository.Find(Title).Select(Mapper.ToBookDto).ToList();
+            return this._bookRepository.Find(search).Select(Mapper.ToBookDto).ToList();
         }
     }
 }

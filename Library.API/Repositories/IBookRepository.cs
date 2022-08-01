@@ -6,8 +6,7 @@ namespace Library.API.Repositories
     {
         // return, name, (params)
         List<Book> List(); 
-        List<Book> Find(string Book);
-
+        List<Book> Find(string search);
         void SaveBook(Book book);
     }
 }

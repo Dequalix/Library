@@ -19,20 +19,14 @@ namespace Library.API.Repositories
                 .ToList();
         }
 
-        public List<Reservation> SearchOnBook(string bookName)
+        public List<Reservation> Find(string search)
         {
             return dataContext.Reservations
                 .Include(x => x.Book)
                 .Include(x => x.User)
-                .Where(x => x.Book.Title.Contains(bookName)).ToList();
-        }
-        
-        public List<Reservation> SearchOnUser(string name)
-        {
-            return dataContext.Reservations
-                .Include(x => x.Book)
-                .Include(x => x.User)
-                .Where(x => x.User.FirstName.Contains(name) || x.User.LastName.Contains(name)).ToList();
+                .Where(x => x.Book.Title.Contains(search)
+                || x.User.FirstName.Contains(search)
+                || x.User.LastName.Contains(search)).ToList();
         }
 
         public void SaveReservation (Reservation reservation)

@@ -16,9 +16,14 @@ namespace Library.API.Repositories
             return dataContext.Books.ToList();
         }
 
-        public List<Book> Find(string title)
+        public List<Book> Find(string input)
         {
-            return dataContext.Books.Where((book) => book.Title.Contains(title)).ToList();
+            return dataContext.Books.Where((book) =>
+            book.Title.Contains(input) ||
+            book.Author.Contains(input) ||
+            book.Language.Contains(input) ||
+            book.Pages.ToString().Contains(input) ||
+            book.Year.ToString().Contains(input)).ToList();
         }
 
         public void SaveBook(Book book)

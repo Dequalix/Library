@@ -15,15 +15,11 @@ namespace Library.API.Repositories
         {
             return dataContext.Users.ToList();
         }
-        public List<User> FindUserByFirstName(string firstName)
+        public List<User> FindUserByName(string name)
         {
-            return dataContext.Users.Where(user => user.FirstName.Contains(firstName)).ToList();
+            return dataContext.Users.Where(user => user.FirstName.Contains(name) || user.LastName.Contains(name)).ToList();
         }
 
-        public List<User> FindUserByLastName(string lastName)
-        {
-            return dataContext.Users.Where(user => user.LastName.Contains(lastName)).ToList();  
-        }
 
         public List<User> FindUserByAdres(string adres)
         {

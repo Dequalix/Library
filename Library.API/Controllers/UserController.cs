@@ -33,11 +33,22 @@ namespace Library.API.Controllers
         }
 
         [HttpGet("list")]
-        public List<UserDTO> list()
+        public List<UserDTO> List()
         {
             return this._userRepository.List().Select((user) => Mapper.ToUserDto(user)).ToList();
-        }    
+        }
 
+        [HttpGet("find")]
+        public List<UserDTO> Find(string name)
+        {
+            return this._userRepository.FindUserByName(name).Select((user) => Mapper.ToUserDto(user)).ToList();
+        }
+
+        [HttpGet("findadres")]
+        public List<UserDTO> FindOnAdres(string adres)
+        {
+            return this._userRepository.FindUserByAdres(adres).Select((user) => Mapper.ToUserDto(user)).ToList();
+        }
 
         [HttpPost("saveuser")]
         public void SaveUser(List<UserDTO> userList)

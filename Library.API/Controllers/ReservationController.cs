@@ -23,17 +23,10 @@ namespace Library.API.Controllers
             return this._reservationRepository.List().Select(reservation => Mapper.ToReservationDto(reservation)).ToList();
         }
 
-        [HttpGet("findreservationbyuser")]
-        public List<ReservationDTO> FindReservationByUser(string user)
+        [HttpGet("find")]
+        public List<ReservationDTO> Find(string search)
         {
-
-            return this._reservationRepository.SearchOnUser(user).Select(reservation => Mapper.ToReservationDto(reservation)).ToList();
-        }
-
-        [HttpGet("findreservationbybook")]
-        public List<ReservationDTO> FindReservationBook(string book)
-        {
-            return this._reservationRepository.SearchOnBook(book).Select(reservation => Mapper.ToReservationDto(reservation)).ToList();
+            return this._reservationRepository.Find(search).Select(reservation => Mapper.ToReservationDto(reservation)).ToList();
         }
 
         [HttpPost("addreservation")]
@@ -41,7 +34,6 @@ namespace Library.API.Controllers
         {
             reservationList.ForEach(reservation => this._reservationRepository.SaveReservation(Mapper.ToReservation(reservation)));
         }
-
         
     }
 

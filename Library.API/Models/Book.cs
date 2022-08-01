@@ -10,9 +10,20 @@ namespace Library.API.Models
         public int Id { get; set; }
 
         [Required]
+        public string Author { get; set; }
+
+        [Required]
         public string Title { get; set; }
 
-        [DataType(DataType.Date)]
-        public DateTime Published { get; set; }
+        [Required]
+        public int Pages { get; set; }
+
+        [Required]
+        public string Language { get; set; }
+
+        public virtual BooksInStock Stock { get; set; }
+
+        [Required]
+        public int Year { get; set; }
     }
 }

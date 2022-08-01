@@ -24,7 +24,7 @@ using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
 
-    var context = services.GetRequiredService<Library.API.DataContext>();
+    var context = services.GetRequiredService<DataContext>();
     context.Database.Migrate();
 }
 

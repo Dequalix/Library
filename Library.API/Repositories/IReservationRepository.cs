@@ -3,8 +3,7 @@
     public interface IReservationRepository
     {
         List<Reservation> List();
-        List<Reservation> SearchOnBook(string bookName);
-        List<Reservation> SearchOnUser(string name);
+        List<Reservation> Find(string search);
         void SaveReservation(Reservation reservation);
     }
 }
