@@ -8,9 +8,6 @@
         public int Pages { get; set; }
         public string Language { get; set; }
         public int Year { get; set; }
-
         public int InStock { get; set; }
-
-
     }
 }

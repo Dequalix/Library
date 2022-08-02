@@ -1,7 +1,5 @@
 ﻿using Library.API.DTO;
-using Library.API.Models;
-using Library.API.Repositories;
-using Microsoft.AspNetCore.Http;
+using Library.API.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Library.API.Controllers
@@ -10,32 +8,30 @@ namespace Library.API.Controllers
     [ApiController]
     public class ReservationController : ControllerBase
     {
-        private readonly IReservationRepository _reservationRepository;
+        private readonly IServices _services;
 
-        public ReservationController(IReservationRepository reservationRepository)
+        public ReservationController(IServices services)
         {
-            this._reservationRepository = reservationRepository;
+            _services = services;
         }
 
         [HttpGet("list")]
-        public List<ReservationDTO> ReservationList()
+        public List<ReservationDTO> List()
         {
-            return this._reservationRepository.List().Select(reservation => Mapper.ToReservationDto(reservation)).ToList();
+            return _services.ReservationList();
         }
 
         [HttpGet("find")]
         public List<ReservationDTO> Find(string search)
         {
-            return this._reservationRepository.Find(search).Select(reservation => Mapper.ToReservationDto(reservation)).ToList();
+            return _services.FindReservation(search);
         }
 
         [HttpPost("addreservation")]
         public void SaveReservation(List<ReservationDTO> reservationList)
         {
-            reservationList.ForEach(reservation => this._reservationRepository.SaveReservation(Mapper.ToReservation(reservation)));
+            _services.SaveReservation(reservationList);
         }
         
     }
-
-   
 }

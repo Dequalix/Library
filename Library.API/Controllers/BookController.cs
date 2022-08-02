@@ -1,7 +1,5 @@
 ﻿using Library.API.DTO;
-using Library.API.Models;
-using Library.API.Repositories;
-using Microsoft.AspNetCore.Http;
+using Library.API.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Library.API.Controllers
@@ -10,33 +8,30 @@ namespace Library.API.Controllers
     [ApiController]
     public class BookController : ControllerBase
     {
-        private readonly IBookRepository _bookRepository;
+        private readonly IServices _services;
 
-        public BookController(IBookRepository bookRepository)
+        public BookController(IServices services)
         {
-            this._bookRepository = bookRepository;
+            _services = services;
         }
 
-
-        
         [HttpGet("list")]
         // scope, return, name, (params)
         public List<BookDTO> BookList()
         {
-            return this._bookRepository.List().Select(Mapper.ToBookDto).ToList();
+            return _services.Booklist();
         }
 
         [HttpPost("addbook")]
         public void SaveBook(List<BookDTO> bookDto)
         {
-            bookDto.ForEach(dto => this._bookRepository.SaveBook(Mapper.ToBook(dto)));
+            _services.SaveBook(bookDto);
         }
 
         [HttpGet("find")]
-        public List<BookDTO> FindBook(string search)
+        public List<BookDTO> Find(string search)
         {
-            //  get books with title
-            return this._bookRepository.Find(search).Select(Mapper.ToBookDto).ToList();
+            return _services.FindBook(search);
         }
     }
 }

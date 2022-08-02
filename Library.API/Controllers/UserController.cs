@@ -1,7 +1,5 @@
 ﻿using Library.API.DTO;
-using Library.API.Models;
-using Library.API.Repositories;
-using Microsoft.AspNetCore.Http;
+using Library.API.Services;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -26,34 +24,28 @@ namespace Library.API.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly IUserRepository _userRepository;
-        public UserController(IUserRepository userRepository)
+        private readonly IServices _services;
+        public UserController(IServices services)
         {
-            this._userRepository = userRepository;
+            _services = services;
         }
 
         [HttpGet("list")]
         public List<UserDTO> List()
         {
-            return this._userRepository.List().Select((user) => Mapper.ToUserDto(user)).ToList();
+            return _services.UserList();
         }
 
         [HttpGet("find")]
-        public List<UserDTO> Find(string name)
+        public List<UserDTO> Find(string search)
         {
-            return this._userRepository.FindUserByName(name).Select((user) => Mapper.ToUserDto(user)).ToList();
-        }
-
-        [HttpGet("findadres")]
-        public List<UserDTO> FindOnAdres(string adres)
-        {
-            return this._userRepository.FindUserByAdres(adres).Select((user) => Mapper.ToUserDto(user)).ToList();
+            return _services.FindUser(search);
         }
 
         [HttpPost("saveuser")]
         public void SaveUser(List<UserDTO> userList)
         {
-            userList.ForEach(user => this._userRepository.SaveUser(Mapper.ToUser(user)));            
+            _services.SaveUser(userList);             
         }
 
     }

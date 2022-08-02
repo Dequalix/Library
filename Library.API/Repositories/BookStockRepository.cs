@@ -19,7 +19,7 @@ namespace Library.API.Repositories
                 .Where((book) =>book.BookId.Equals(bookId))
                 .First()
                 .TotalStock
-                .GetValueOrDefault(0);           
+                .GetValueOrDefault();           
         }
 
     }

@@ -5,8 +5,7 @@ namespace Library.API.Repositories
     public interface IUserRepository
     {
         List<User> List();
-        List<User> FindUserByName(string name);
-        List<User> FindUserByAdres(string adres);
+        List<User> Find(string search);
         void SaveUser(User user);
     }
 }

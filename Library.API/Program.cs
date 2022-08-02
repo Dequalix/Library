@@ -1,6 +1,7 @@
 using Library.API;
 using Microsoft.EntityFrameworkCore;
 using Library.API.Repositories;
+using Library.API.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,7 +11,7 @@ builder.Services.AddControllers();
 builder.Services.AddDbContext<DataContext>(options => 
   options.UseSqlServer(builder.Configuration.GetConnectionString("dbconn")));
 
-
+builder.Services.AddScoped<IServices, Services>();
 builder.Services.AddScoped<IBookRepository, BookRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IReservationRepository, ReservationRepository>();
